@@ -9,14 +9,11 @@ class Grid():
         self.coords_bomb = []
 
         for _ in range(self.size ** 2 // 8):
-
             x = random.randint(0, self.size - 1)
             y = random.randint(0, self.size - 1)
-
             while (x, y) in self.coords_bomb:
                 x = random.randint(0, self.size - 1)
                 y = random.randint(0, self.size - 1)
-
             self.grid[x][y].bombed = True
             self.coords_bomb.append((x, y))
 

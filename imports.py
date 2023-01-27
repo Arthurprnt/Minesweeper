@@ -3,6 +3,7 @@ from func import pygameimage
 
 running = True
 stats = 0
+#screen = pygame.display.set_mode((1920, 1080))
 screen = pygame.display.set_mode()
 screen_x, screen_y = screen.get_size()
 pygame.display.set_caption('Minesweeper')
@@ -15,3 +16,5 @@ start_game = {
     "away": pygameimage(pygame.transform.scale(pygame.image.load("assets/start_game.png"), (737, 132)), (screen_x // 2 - 737 // 2, screen_y // 2)),
     "target": pygameimage(pygame.transform.scale(pygame.image.load("assets/start_game_target.png"), (737, 132)), (screen_x // 2 - 737 // 2, screen_y // 2))
 }
+triangle_up = pygameimage(pygame.transform.scale(pygame.image.load("assets/triangle.png"), (51, 20)), (screen_x // 2 + 195, screen_y // 2 + 171))
+triangle_down = pygameimage(pygame.transform.scale(pygame.transform.rotate(pygame.image.load("assets/triangle.png"), 180), (51, 20)), (screen_x // 2 + 195, screen_y // 2 + 201))
