@@ -1,15 +1,9 @@
 from grid import Grid, Case
+from func import collide
 from imports import *
 pygame.init()
 
-running = True
-stats = 0
-screen = pygame.display.set_mode()
-screen_x, screen_y = screen.get_size()
-pygame.display.set_caption('Minesweeper')
-clock = pygame.time.Clock()
-
-length = 12
+length = 9
 
 grille = Grid(length)
 
@@ -23,10 +17,14 @@ print(f"Il y a {len(grille.coords_bomb)} bombes.")
 
 while running:
 
-    screen.blit(background, (screen_x // 2 - background.get_size()[0] // 2, screen_y // 2 - background.get_size()[1] // 2))
+    screen.blit(background.image, background.pos)
 
     if stats == 0:
-        screen.blit(logo, (screen_x // 2 - logo.get_size()[0] // 2, screen_y // 60))
+        screen.blit(logo.image, logo.pos)
+        if collide(start_game["target"], pygame.mouse.get_pos()):
+            screen.blit(start_game["target"].image, start_game["target"].pos)
+        else:
+            screen.blit(start_game["away"].image, start_game["away"].pos)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
