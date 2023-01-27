@@ -20,6 +20,10 @@ while running:
         showtext(screen, f"Grid size: {length}", "assets/DIN_Bold.ttf", 75, (screen_x//2 - 240, screen_y//2 + 190), (255, 255, 255), False)
         screen.blit(triangle_up.image, triangle_up.pos)
         screen.blit(triangle_down.image, triangle_down.pos)
+    elif stats == 1:
+        for x in range(length):
+            for y in range(length):
+                screen.blit(grille.grid[x][y].image, grille.grid[x][y].pos)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -33,15 +37,8 @@ while running:
                     if collide(start_game["target"], event.pos):
                         stats = 1
                         grille = Grid(length)
-                        liste_test = [[0 for _ in range(length)] for _ in range(length)]
-                        for x in range(length):
-                            for y in range(length):
-                                liste_test[x][y] = grille.grid[x][y].value
-                        for rangee in liste_test:
-                            print(rangee)
-                        print(f"Il y a {len(grille.coords_bomb)} bombes.")
-                    elif collide(triangle_up, event.pos):
-                        if pygame.key.get_pressed()[pygame.K_LCTRL]:
+                    elif collide(triangle_up, event.pos) and length < 30:
+                        if pygame.key.get_pressed()[pygame.K_LCTRL] and length < 28:
                             length += 3
                         else:
                             length += 1
