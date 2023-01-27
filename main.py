@@ -37,8 +37,8 @@ while running:
                     if collide(start_game["target"], event.pos):
                         stats = 1
                         grille = Grid(length)
-                    elif collide(triangle_up, event.pos) and length < 30:
-                        if pygame.key.get_pressed()[pygame.K_LCTRL] and length < 28:
+                    elif collide(triangle_up, event.pos) and length < 23:
+                        if pygame.key.get_pressed()[pygame.K_LCTRL] and length < 21:
                             length += 3
                         else:
                             length += 1
