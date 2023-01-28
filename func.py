@@ -29,3 +29,29 @@ def showtext(screen, text, font, size, pos, color, center):
     else:
         text_rect.midleft = pos
     screen.blit(text_shown, text_rect)
+
+def eventpostocoord(mousecoord, oo_coords):
+    nb_x = 1
+    while mousecoord[0] > oo_coords[0]:
+        x = x - 45
+        nb_x = nb_x + 1
+    nb_y = 1
+    while mousecoord[1] > oo_coords[1]:
+        y = y - 45
+        nb_y = nb_y + 1
+    return nb_x, nb_y
+
+def findotheremptycase(mousecoord, oo_coords, grid):
+    nb_x, nb_y = eventpostocoord(mousecoord, oo_coords)
+    if grid[nb_x][nb_y] != 0:
+        return
+    else:
+        for y in range(-1, 2):
+            for x in range(-1, 2):
+                if 0 <= nb_x+x < len(grid[0]) and 0 <= nb_y+y < len(grid[0]):
+                    if grid[nb_x+x][nb_y+y].value == 0:
+                        grid[nb_x+x][nb_y+y].pyimage.image = pygame.image.load("assets/open_case.png")
+                        grid[nb_x+x][nb_y+y].opened = True
+                        return findotheremptycase(mousecoord, (oo_coords[0]+45*(nb_x+x), oo_coords[1]+45*(nb_y+y)))
+                    else:
+                        return

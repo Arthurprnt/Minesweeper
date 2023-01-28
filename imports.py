@@ -18,3 +18,16 @@ start_game = {
 }
 triangle_up = pygameimage(pygame.transform.scale(pygame.image.load("assets/triangle.png"), (51, 20)), (screen_x // 2 + 195, screen_y // 2 + 171))
 triangle_down = pygameimage(pygame.transform.scale(pygame.transform.rotate(pygame.image.load("assets/triangle.png"), 180), (51, 20)), (screen_x // 2 + 195, screen_y // 2 + 201))
+
+case_size = 45
+color_per_number = {
+    "1": (100, 197, 248),
+    "2": (9, 214, 252),
+    "3": (75, 22, 202),
+    "4": (254, 219, 94),
+    "5": (225, 119, 12),
+    "6": (139, 23, 23),
+    "7": (139, 23, 23),
+    "8": (139, 23, 23)
+
+}
