@@ -4,8 +4,8 @@ from func import pygameimage
 running = True
 debug = False
 stats = 0
-screen = pygame.display.set_mode((1920, 1080))
-#screen = pygame.display.set_mode()
+#screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode()
 screen_x, screen_y = screen.get_size()
 pygame.display.set_caption('Minesweeper')
 pygame.display.set_icon(pygame.image.load('assets/icon.png'))

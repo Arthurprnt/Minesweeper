@@ -106,6 +106,7 @@ while running:
                         length = 12
                         del grille
                         first_bomb_clicked = False
+                        cases_flagged = 0
                         stats = 0
             elif event.button == pygame.BUTTON_RIGHT:
                 if stats == 1:
