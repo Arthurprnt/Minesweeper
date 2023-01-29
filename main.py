@@ -1,5 +1,5 @@
-import pygame
-
+import webbrowser
+import os
 from grid import Grid, findotheremptycase, eventpostocoord
 from func import collide, showtext, updatestats1
 from imports import *
@@ -32,9 +32,14 @@ while running:
         screen.blit(triangle_up.image, triangle_up.pos)
         screen.blit(triangle_down.image, triangle_down.pos)
     elif stats == 1:
-        updatestats1(screen, cases_flagged, grille, length, color_per_number, flag)
+        if first_bomb_clicked:
+            time[1] += 1/60
+            if time[1] >= 60:
+                time[0] += 1
+                time[1] = 0
+        updatestats1(screen, cases_flagged, grille, length, color_per_number, flag, time)
     elif stats == 2:
-        updatestats1(screen, cases_flagged, grille, length, color_per_number, flag)
+        updatestats1(screen, cases_flagged, grille, length, color_per_number, flag, time)
         showtext(screen, txt_win, "assets/DIN_Bold.ttf", 72, (screen_x - 50, 30), (255, 255, 255), "topright")
         if collide(restart_game["target"], pygame.mouse.get_pos()):
             screen.blit(restart_game["target"].image, restart_game["target"].pos)
@@ -79,28 +84,30 @@ while running:
                                 if first_bomb_clicked is False:
                                     first_bomb_clicked = True
                                     grille.addbombs(event.pos, coords)
-                                case.pyimage.image = pygame.image.load("assets/open_case.png")
-                                if case.bombed:
-                                    txt_win = "Game over"
-                                    stats = 2
-                                else:
-                                    if case.value == 0:
-                                        findotheremptycase(event.pos, eventpostocoord(event.pos, coords), grille.grid)
+                                    time = [0, 0]
+                                if not(case.flaged):
+                                    case.pyimage.image = pygame.image.load("assets/open_case.png")
+                                    if case.bombed:
+                                        txt_win = "Game over"
+                                        stats = 2
                                     else:
-                                        case.opened = True
-                                len_cases_opened = 0
-                                len_bombs_flaged = 0
-                                for y in range(length):
-                                    for x in range(length):
-                                        case = grille.grid[y][x]
-                                        if case.bombed and case.flaged:
-                                            if (y, x) in grille.coords_bomb:
-                                                len_bombs_flaged += 1
-                                        elif case.opened:
-                                            len_cases_opened += 1
-                                if len_bombs_flaged == len(grille.coords_bomb) and len_cases_opened == (grille.size**2-len(grille.coords_bomb)):
-                                    txt_win = "You won !"
-                                    stats = 2
+                                        if case.value == 0:
+                                            findotheremptycase(event.pos, eventpostocoord(event.pos, coords), grille.grid)
+                                        else:
+                                            case.opened = True
+                                    len_cases_opened = 0
+                                    len_bombs_flaged = 0
+                                    for y in range(length):
+                                        for x in range(length):
+                                            case = grille.grid[y][x]
+                                            if case.bombed and case.flaged:
+                                                if (y, x) in grille.coords_bomb:
+                                                    len_bombs_flaged += 1
+                                            elif case.opened:
+                                                len_cases_opened += 1
+                                    if len_bombs_flaged == len(grille.coords_bomb) and len_cases_opened == (grille.size**2-len(grille.coords_bomb)):
+                                        txt_win = "You won !"
+                                        stats = 2
                 elif stats == 2:
                     if collide(restart_game["target"], event.pos):
                         length = 12
@@ -108,6 +115,7 @@ while running:
                         first_bomb_clicked = False
                         cases_flagged = 0
                         stats = 0
+                        webbrowser.open_new_tab(os.path.abspath("leaderboard/index.html"))
             elif event.button == pygame.BUTTON_RIGHT:
                 if stats == 1:
                     for line in grille.grid:

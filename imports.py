@@ -4,6 +4,7 @@ from func import pygameimage
 running = True
 debug = False
 stats = 0
+time = [0, 0]
 #screen = pygame.display.set_mode((1920, 1080))
 screen = pygame.display.set_mode()
 screen_x, screen_y = screen.get_size()

@@ -40,8 +40,16 @@ def showtext(screen, text, font, size, pos, color, align):
         text_rect.bottomright = pos
     screen.blit(text_shown, text_rect)
 
-def updatestats1(screen, cases_flagged, grille, length, color_per_number, flag):
+def updatestats1(screen, cases_flagged, grille, length, color_per_number, flag, time):
     showtext(screen, f"{cases_flagged}/{grille.size ** 2 // 8}", "assets/DIN_Bold.ttf", 80, (50, 80), (255, 255, 255),
+             "midleft")
+    min = time[0]
+    sec = int(time[1]//1)
+    if len(str(min)) == 1:
+        min = f"0{min}"
+    if len(str(sec)) == 1:
+        sec = f"0{sec}"
+    showtext(screen, f"{min}:{sec}", "assets/DIN_Bold.ttf", 80, (50, 180), (255, 255, 255),
              "midleft")
     for x in range(length):
         for y in range(length):
