@@ -1,0 +1,92 @@
+body { 
+  background-color: rgb(39, 41, 52)
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px 19.5%;
+  background-color: rgb(31, 33, 41);
+}
+
+.title {
+  color: white;
+  text-align: center;
+  font-size: 57px;
+  font-family: "Montserrat", sans-serif;
+  padding: 110px;
+}
+  
+.logo {
+  margin-right: auto;
+}
+
+.dropdown {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+.dropdown button {
+  background: none;
+  border: none;
+  color: white;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+}
+  
+.dropdown button:hover {
+  color: #ff0000;
+}
+.nav__links a,
+.cta,
+.overlay__content a {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #edf0f1;
+  text-decoration: none;
+}
+.nav__links li {
+  padding: 0px 20px;
+}
+.nav__links li a {
+  transition: all 0.3s ease 0s;
+}
+.nav__links li a:hover {
+  color: #ff2f2f;
+}
+
+.nav__links {
+  list-style: none;
+  display: flex;
+}
+
+input {
+  font-size: 1rem;
+}
+
+.tout_profils {
+  position: absolute;
+  left: 47%;
+  top: 400px;
+}
+.search_joueurs {
+  background: rgb(31, 33, 41);
+  border-radius: 35px;
+  border: none;
+  outline: none;
+  padding: 0;
+  color: white;
+  font-size: 16px;
+  line-height: 35px;
+  padding: 5px;
+}
