@@ -1,7 +1,6 @@
-import webbrowser
-import os
+import webbrowser, os, csv
 from grid import Grid, findotheremptycase, eventpostocoord
-from func import collide, showtext, updatestats1
+from func import collide, showtext, updatestats1, checkwin, addscore
 from imports import *
 pygame.init()
 
@@ -97,16 +96,10 @@ while running:
                                             case.opened = True
                                     len_cases_opened = 0
                                     len_bombs_flaged = 0
-                                    for y in range(length):
-                                        for x in range(length):
-                                            case = grille.grid[y][x]
-                                            if case.bombed and case.flaged:
-                                                if (y, x) in grille.coords_bomb:
-                                                    len_bombs_flaged += 1
-                                            elif case.opened:
-                                                len_cases_opened += 1
-                                    if len_bombs_flaged == len(grille.coords_bomb) and len_cases_opened == (grille.size**2-len(grille.coords_bomb)):
+                                    if checkwin(length, grille):
                                         txt_win = "You won !"
+                                        # Send stats to the .csv file
+                                        addscore(time, length)
                                         stats = 2
                 elif stats == 2:
                     if collide(restart_game["target"], event.pos):
