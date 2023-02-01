@@ -25,7 +25,14 @@
             <h1 class="title">Times leaderboard</h1>
             <div class="tout_profils">
                 <div class="search-wrapper">
-                    <input class="search_joueurs" type="search" placeholder="Find a player" id="search" data-search>
+                    <input class="search_joueurs" type="search" placeholder="Find a player or filter grid size" id="search" data-search>
+                </div>
+                <div class="user-cards" data-user-cards-container>
+                    <template data-user-template>
+                            <div class="card">
+                                    <div class="header_card" data-header></div>
+                            </div>
+                    </template>
                 </div>
             </div>
         </main>

@@ -12,14 +12,17 @@ searchInput.addEventListener("input", (e) => {
     })
 })
 
-var currentDirectory = window.location.pathname.split('/').slice(0, -1).join('/');
-console.log(`${currentDirectory}/assets/stats.csv`)
+data = [
+]
 
-onload = fetch(`file:/${currentDirectory}/assets/stats.csv`)
+data.sort()
 
-    .then(res => {return res.text()})
-    .then(data => {
+for (let i = 0; i < data.length; i++) {
 
-        console.log(data)
+  const card = userCardTemplate.content.cloneNode(true).children[0]
+  const header = card.querySelector("[data-header]")
+  header.textContent = `${data[i][2]} - ${data[i][0]} - ${data[i][1]}`
+  userCardContainer.append(card)
+  users.push({name: `${data[i][2]} - ${data[i][1]}`, element: card})
 
-})
+}

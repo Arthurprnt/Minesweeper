@@ -65,24 +65,36 @@ def updatestats1(screen, cases_flagged, grille, length, color_per_number, flag, 
 
 def checkwin(length, grille):
     len_cases_opened = 0
-    len_bombs_flaged = 0
     for y in range(length):
         for x in range(length):
             case = grille.grid[y][x]
-            if case.bombed and case.flaged:
-                if (y, x) in grille.coords_bomb:
-                    len_bombs_flaged += 1
-    return len_bombs_flaged == len(grille.coords_bomb)
+            if case.opened:
+                len_cases_opened += 1
+    return len_cases_opened == grille.size**2 - (grille.size ** 2 // 8)
 
-def addscore(time, length):
+def addscore(nickname, time, length):
+    # Yes I know this function is horrible, but it work so ...
     min = time[0]
     sec = int(time[1]//1)
     if len(str(min)) == 1:
         min = f"0{min}"
     if len(str(sec)) == 1:
         sec = f"0{sec}"
-    data_to_add = [["Pseudo", f"{min}:{sec}", str(length)]]
-    csv_file = open("leaderboard/assets/stats.csv", "a", newline="")
-    writer = csv.writer(csv_file)
-    writer.writerows(data_to_add)
-    csv_file.close()
+    if len(str(length)) == 1:
+        length = f"0{length}"
+    txt_to_add = f'    ["{min}:{sec}", "{str(length)}", "{nickname}"],\n'
+    file_txt = []
+    file = open("leaderboard/func.js", "r")
+    line = file.readline()
+    while line != "":
+        file_txt.append(line)
+        line = file.readline()
+    line_found = False
+    for i in range(len(file_txt)):
+        if(file_txt[i].startswith("]")) and line_found is False:
+            line_found = True
+            file_txt.insert(i, txt_to_add)
+    file.close()
+    file = open("leaderboard/func.js", "w")
+    for i in file_txt:
+        file.write(i)

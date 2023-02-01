@@ -1,4 +1,4 @@
-import webbrowser, os, csv
+import webbrowser, os
 from grid import Grid, findotheremptycase, eventpostocoord
 from func import collide, showtext, updatestats1, checkwin, addscore
 from imports import *
@@ -44,6 +44,10 @@ while running:
             screen.blit(restart_game["target"].image, restart_game["target"].pos)
         else:
             screen.blit(restart_game["away"].image, restart_game["away"].pos)
+        if collide(ranking["target"], pygame.mouse.get_pos()):
+            screen.blit(ranking["target"].image, ranking["target"].pos)
+        else:
+            screen.blit(ranking["away"].image, ranking["away"].pos)
         for x in range(length):
             for y in range(length):
                 case = grille.grid[x][y]
@@ -99,15 +103,15 @@ while running:
                                     if checkwin(length, grille):
                                         txt_win = "You won !"
                                         # Send stats to the .csv file
-                                        addscore(time, length)
+                                        addscore(nickname, time, length)
                                         stats = 2
                 elif stats == 2:
                     if collide(restart_game["target"], event.pos):
-                        length = 12
                         del grille
                         first_bomb_clicked = False
                         cases_flagged = 0
                         stats = 0
+                    if collide(ranking["target"], event.pos):
                         webbrowser.open_new_tab(os.path.abspath("leaderboard/index.html"))
             elif event.button == pygame.BUTTON_RIGHT:
                 if stats == 1:

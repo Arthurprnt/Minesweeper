@@ -5,7 +5,6 @@ running = True
 debug = False
 stats = 0
 time = [0, 0]
-#screen = pygame.display.set_mode((1920, 1080))
 screen = pygame.display.set_mode()
 screen_x, screen_y = screen.get_size()
 pygame.display.set_caption('Minesweeper')
@@ -24,9 +23,14 @@ restart_game = {
     "away": pygameimage(pygame.transform.scale(pygame.image.load("assets/replay_game.png"), (350, 99)), (screen_x - 350 - 50, 140)),
     "target": pygameimage(pygame.transform.scale(pygame.image.load("assets/replay_game_target.png"), (350, 99)), (screen_x - 350 - 50, 140))
 }
+ranking = {
+    "away": pygameimage(pygame.transform.scale(pygame.image.load("assets/ranking.png"), (350, 99)), (screen_x - 350 - 50, 255)),
+    "target": pygameimage(pygame.transform.scale(pygame.image.load("assets/ranking_target.png"), (350, 99)), (screen_x - 350 - 50, 255))
+}
 triangle_up = pygameimage(pygame.transform.scale(pygame.image.load("assets/triangle.png"), (51, 20)), (screen_x // 2 + 195, screen_y // 2 + 171))
 triangle_down = pygameimage(pygame.transform.scale(pygame.transform.rotate(pygame.image.load("assets/triangle.png"), 180), (51, 20)), (screen_x // 2 + 195, screen_y // 2 + 201))
 
+nickname = "XXXXXX"
 first_bomb_clicked = False
 case_size = 45
 cases_flagged = 0

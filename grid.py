@@ -3,7 +3,7 @@ import random
 import pygame.image
 
 from func import pygameimage
-from imports import screen_x, screen_y, case_size
+from imports import screen_x, case_size
 
 class Grid():
 
