@@ -36,6 +36,11 @@ while running:
             if time[1] >= 60:
                 time[0] += 1
                 time[1] = 0
+            if checkwin(length, grille):
+                txt_win = "You won !"
+                # Send stats to the .csv file
+                stats = 2
+                addscore(nickname, time, length)
         updatestats1(screen, cases_flagged, grille, length, color_per_number, flag, time)
     elif stats == 2:
         updatestats1(screen, cases_flagged, grille, length, color_per_number, flag, time)
@@ -95,16 +100,13 @@ while running:
                                         stats = 2
                                     else:
                                         if case.value == 0:
-                                            findotheremptycase(event.pos, eventpostocoord(event.pos, coords), grille.grid)
+                                            findotheremptycase(eventpostocoord(event.pos, coords), grille.grid)
                                         else:
                                             case.opened = True
                                     len_cases_opened = 0
                                     len_bombs_flaged = 0
-                                    if checkwin(length, grille):
-                                        txt_win = "You won !"
-                                        # Send stats to the .csv file
-                                        addscore(nickname, time, length)
-                                        stats = 2
+                            if collide(case.pyimage, event.pos):
+                                case.checkcomplete(grille, nickname, time, length)
                 elif stats == 2:
                     if collide(restart_game["target"], event.pos):
                         del grille

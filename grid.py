@@ -21,10 +21,10 @@ class Grid():
                 color_image = 1
             for x in range(self.size):
                 if color_image == 0:
-                    self.grid[y].append(Case(pygame.image.load("assets/dark_case.png"), (coords[0], coords[1])))
+                    self.grid[y].append(Case(pygame.image.load("assets/dark_case.png"), (coords[0], coords[1]), (y, x)))
                     color_image = 1
                 elif color_image == 1:
-                    self.grid[y].append(Case(pygame.image.load("assets/light_case.png"), (coords[0], coords[1])))
+                    self.grid[y].append(Case(pygame.image.load("assets/light_case.png"), (coords[0], coords[1]), (y, x)))
                     color_image = 0
                 coords[0] += case_size
             coords[0] = screen_x // 2 - size * case_size // 2
@@ -65,12 +65,31 @@ class Grid():
 
 class Case():
 
-    def __init__(self, image, pos):
+    def __init__(self, image, pos, coords):
         self.pyimage = pygameimage(image, pos)
+        self.coords = coords
         self.value = 9
         self.opened = False
         self.bombed = False
         self.flaged = False
+
+    def checkcomplete(self, grid, nickname, time, length):
+        cases_flagged = 0
+        coord_y, coord_x = self.coords
+        for y in range(-1, 2):
+            for x in range(-1, 2):
+                if 0 <= coord_x+x < grid.size and 0 <= coord_y+y < grid.size:
+                    if grid.grid[coord_y+y][coord_x+x].flaged:
+                        cases_flagged += 1
+        if cases_flagged == self.value:
+            for y in range(-1, 2):
+                for x in range(-1, 2):
+                    if 0 <= coord_x + x < grid.size and 0 <= coord_y + y < grid.size:
+                        if not(grid.grid[coord_y+y][coord_x+x].bombed) and not(grid.grid[coord_y+y][coord_x+x].flaged):
+                            if grid.grid[coord_y+y][coord_x+x].value == 0:
+                                findotheremptycase((coord_x+x, coord_y+y), grid.grid)
+                            grid.grid[coord_y+y][coord_x+x].opened = True
+                            grid.grid[coord_y+y][coord_x+x].pyimage.image = pygame.image.load("assets/open_case.png")
 
 def eventpostocoord(mousecoord, oo_coords):
     x, y = mousecoord
@@ -84,13 +103,13 @@ def eventpostocoord(mousecoord, oo_coords):
         nb_y += 1
     return nb_x-1, nb_y-1
 
-def findotheremptycase(mousecoord, coords, grid):
+def findotheremptycase(coords, grid):
     nb_x, nb_y = coords
     if 0 <= nb_x < len(grid[0]) and 0 <= nb_y < len(grid[0]) and grid[nb_y][nb_x].value == 0 and grid[nb_y][nb_x].opened is False and grid[nb_y][nb_x].flaged is False:
         grid[nb_y][nb_x].pyimage.image = pygame.image.load("assets/open_case.png")
         grid[nb_y][nb_x].opened = True
         coordtovisit = [(-1, 0), (0, -1), (0, 1), (1, 0)]
-        return findotheremptycase(mousecoord, (coords[0]+coordtovisit[0][0], coords[1]+coordtovisit[0][1]), grid), findotheremptycase(mousecoord, (coords[0]+coordtovisit[1][0], coords[1]+coordtovisit[1][1]), grid), findotheremptycase(mousecoord, (coords[0]+coordtovisit[2][0], coords[1]+coordtovisit[2][1]), grid), findotheremptycase(mousecoord, (coords[0]+coordtovisit[3][0], coords[1]+coordtovisit[3][1]), grid)
+        return findotheremptycase((coords[0]+coordtovisit[0][0], coords[1]+coordtovisit[0][1]), grid), findotheremptycase((coords[0]+coordtovisit[1][0], coords[1]+coordtovisit[1][1]), grid), findotheremptycase((coords[0]+coordtovisit[2][0], coords[1]+coordtovisit[2][1]), grid), findotheremptycase((coords[0]+coordtovisit[3][0], coords[1]+coordtovisit[3][1]), grid)
     elif 0 <= nb_x < len(grid[0]) and 0 <= nb_y < len(grid[0]) and grid[nb_y][nb_x].value != 9 and grid[nb_y][nb_x].flaged is False:
         grid[nb_y][nb_x].pyimage.image = pygame.image.load("assets/open_case.png")
         grid[nb_y][nb_x].opened = True
