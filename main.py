@@ -28,6 +28,14 @@ while running:
         else:
             screen.blit(start_game["away"].image, start_game["away"].pos)
         showtext(screen, f"Grid size: {length}", "assets/DIN_Bold.ttf", 75, (screen_x//2 - 240, screen_y//2 + 190), (255, 255, 255), "midleft")
+        nicknameshown = ""
+        for letter in nickname:
+            nicknameshown = nicknameshown + f"{letter} "
+        nicknameshown = nicknameshown[:len(nicknameshown)-1]
+        showtext(screen, "Nickname:", "assets/DIN_Bold.ttf", 60, (screen_x // 2, screen_y - 220), (255, 255, 255), "center")
+        showtext(screen, nicknameshown, "assets/DIN_Bold.ttf", 80, (screen_x//2, screen_y - 120), (255, 255, 255), "center")
+        if dont_added_nick:
+            showtext(screen, "Please add a nickname before starting the game !", "assets/DIN_Bold.ttf", 30, (screen_x//2, 675), warning_color, "center")
         screen.blit(triangle_up.image, triangle_up.pos)
         screen.blit(triangle_down.image, triangle_down.pos)
     elif stats == 1:
@@ -38,7 +46,7 @@ while running:
                 time[1] = 0
             if checkwin(length, grille):
                 txt_win = "You won !"
-                # Send stats to the .csv file
+                # Send stats to the .js file
                 stats = 2
                 addscore(nickname, time, length)
         updatestats1(screen, cases_flagged, grille, length, color_per_number, flag, time)
@@ -67,15 +75,32 @@ while running:
                 running = False
             elif event.key == pygame.K_F4:
                 debug = not (debug)
+            elif event.key == pygame.K_BACKSPACE:
+                deleted = False
+                for i in range(len(nickname)-1, -1, -1):
+                    if nickname[i] != "_" and not deleted:
+                        deleted = True
+                        nickname = nickname[:i] + "_" + nickname[i + 1:]
+            elif event.unicode.upper() in accepted_carac:
+                assigned = False
+                for i in range(len(nickname)):
+                    if nickname[i] == "_" and not assigned:
+                        assigned = True
+                        nickname = nickname[:i] + event.unicode.upper() + nickname[i+1:]
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == pygame.BUTTON_LEFT:
                 if stats == 0:
-                    if collide(start_game["target"], event.pos):
+                    if collide(start_game["target"], event.pos) and "_" not in nickname:
                         stats = 1
                         coords = [(screen_x // 2) - ((length * case_size) // 2), (screen_y // 2) - ((length * case_size) // 2)]
                         grille = Grid(length, coords)
                         coords[1] -= length*case_size # If I don't put this the code don't work, idk why x)
-                    elif collide(triangle_up, event.pos) and length < 23:
+                    else:
+                        dont_added_nick = True
+                        if warning_color[1] > 25:
+                            warning_color[1] -= 25
+                            warning_color[2] -= 25
+                    if collide(triangle_up, event.pos) and length < 23:
                         if pygame.key.get_pressed()[pygame.K_LCTRL] and length < 21:
                             length += 3
                         else:
@@ -112,6 +137,8 @@ while running:
                         del grille
                         first_bomb_clicked = False
                         cases_flagged = 0
+                        dont_added_nick = False
+                        warning_color = [255, 200, 200]
                         stats = 0
                     if collide(ranking["target"], event.pos):
                         webbrowser.open_new_tab(os.path.abspath("leaderboard/index.html"))

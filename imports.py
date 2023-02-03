@@ -30,8 +30,12 @@ ranking = {
 triangle_up = pygameimage(pygame.transform.scale(pygame.image.load("assets/triangle.png"), (51, 20)), (screen_x // 2 + 195, screen_y // 2 + 171))
 triangle_down = pygameimage(pygame.transform.scale(pygame.transform.rotate(pygame.image.load("assets/triangle.png"), 180), (51, 20)), (screen_x // 2 + 195, screen_y // 2 + 201))
 
-nickname = "XXXXXX"
+nickname = "______"
+accepted_carac = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                  'U', 'V', 'W', 'X', 'Y', 'Z')
 first_bomb_clicked = False
+dont_added_nick = False
+warning_color = [255, 200, 200]
 case_size = 45
 cases_flagged = 0
 color_per_number = {

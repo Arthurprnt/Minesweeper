@@ -74,6 +74,8 @@ def checkwin(length, grille):
 
 def addscore(nickname, time, length):
     # Yes I know this function is horrible, but it work so ...
+    for i in range(1, len(nickname)):
+        nickname = nickname[:i] + nickname[i].lower() + nickname[i+1:]
     min = time[0]
     sec = int(time[1]//1)
     if len(str(min)) == 1:
