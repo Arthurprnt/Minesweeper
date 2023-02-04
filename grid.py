@@ -108,8 +108,8 @@ def findotheremptycase(coords, grid):
     if 0 <= nb_x < len(grid[0]) and 0 <= nb_y < len(grid[0]) and grid[nb_y][nb_x].value == 0 and grid[nb_y][nb_x].opened is False and grid[nb_y][nb_x].flaged is False:
         grid[nb_y][nb_x].pyimage.image = pygame.image.load("assets/open_case.png")
         grid[nb_y][nb_x].opened = True
-        coordtovisit = [(-1, 0), (0, -1), (0, 1), (1, 0)]
-        return findotheremptycase((coords[0]+coordtovisit[0][0], coords[1]+coordtovisit[0][1]), grid), findotheremptycase((coords[0]+coordtovisit[1][0], coords[1]+coordtovisit[1][1]), grid), findotheremptycase((coords[0]+coordtovisit[2][0], coords[1]+coordtovisit[2][1]), grid), findotheremptycase((coords[0]+coordtovisit[3][0], coords[1]+coordtovisit[3][1]), grid)
+        coordtovisit = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+        return findotheremptycase((coords[0]+coordtovisit[0][0], coords[1]+coordtovisit[0][1]), grid), findotheremptycase((coords[0]+coordtovisit[1][0], coords[1]+coordtovisit[1][1]), grid), findotheremptycase((coords[0]+coordtovisit[2][0], coords[1]+coordtovisit[2][1]), grid), findotheremptycase((coords[0]+coordtovisit[3][0], coords[1]+coordtovisit[3][1]), grid), findotheremptycase((coords[0]+coordtovisit[4][0], coords[1]+coordtovisit[4][1]), grid), findotheremptycase((coords[0]+coordtovisit[5][0], coords[1]+coordtovisit[5][1]), grid), findotheremptycase((coords[0]+coordtovisit[6][0], coords[1]+coordtovisit[6][1]), grid), findotheremptycase((coords[0]+coordtovisit[7][0], coords[1]+coordtovisit[7][1]), grid)
     elif 0 <= nb_x < len(grid[0]) and 0 <= nb_y < len(grid[0]) and grid[nb_y][nb_x].value != 9 and grid[nb_y][nb_x].flaged is False:
         grid[nb_y][nb_x].pyimage.image = pygame.image.load("assets/open_case.png")
         grid[nb_y][nb_x].opened = True

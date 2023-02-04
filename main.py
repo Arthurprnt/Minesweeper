@@ -21,6 +21,7 @@ while running:
         showtext(screen, str(pygame.mouse.get_pos()), "assets/DIN_Bold.ttf", 30, (40, screen_y-50), (255, 255, 255), "topleft")
         print(stats)
 
+    # Display game elements
     if stats == 0:
         screen.blit(logo.image, logo.pos)
         if collide(start_game["target"], pygame.mouse.get_pos()):
@@ -67,6 +68,7 @@ while running:
                 if case.bombed:
                     screen.blit(bomb, case.pyimage.pos)
 
+    # Manage user inputs
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
